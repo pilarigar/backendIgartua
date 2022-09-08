@@ -1,51 +1,73 @@
 
-//realizo la clase usuario
-class user {
-    constructor (name, lastName, books=[], pets=[]){
+const fs = require('fs')
 
-        this.name = name;
-        this.lastName = lastName;
-        this.books = books;
-        this.pets = pets;
+class Container {
 
+  constructor (fileRoute) {
+    this.fileRoute = fileRoute
+  }
+
+  async #readArchive (){ // es privado porque se usa internamente
+    try{
+      const content = await fs.promises.readFile(this.fileRoute, 'utf-8')
+      const parseContent = JSON.parse (content)
+      return parseContent
+    }catch (error){
+      console.log (error)
     }
+  }
 
-    //métodos
-    GetFullName () {
-        return `${this.name} ${this.lastName}`
-    }
+    async save (obj) { //guardar un objeto en el arichivo y le asigna un id
+      const fileContent = await this.#readArchive()
 
-    AddPets (pets) {
-        this.pets.push (pets)
+      if (fileContent.length !== 0) {
+        console.log (fileContent)
+        await fs.promises.writeFile (this.fileRoute, JSON.stringify ([...fileContent, {...obj, id:fileContent[fileContent.length - 1].id + 1}], null, 2), 'utf-8')
+      }else{
+        await fs.promises.writeFile (this.fileRoute, JSON.stringify ([{...obj, id: 1}]), 'utf-8')
+      }
     }
     
-    CountPets () {
-      return this.pets.length
+    async getById(id){ // busca por id y devuelve el objeto encontrado
+      const fileContent = await this.#readArchive()
+      let item = fileContent.filter (obj => obj.id === id)
+
+      if (fileContent.filter (obj => obj.id === id)) {
+        console.log (item)
+      }else{
+        console.log ('el id no existe')
+      }
+
     }
 
-    AddBook (title, author){
-        this.books.push ({title: title, author: author})
+    async getAll(){ // devuelve un array con los objetos presentes en el archivo
+        const fileContent =  await this.#readArchive()
+        console.log(fileContent)
     }
 
-    GetBooksNames () {
-        return this.books.map ((books)=>books.title)
+    async deleteById (id) { //borrar por id
+      const fileContent = await this.#readArchive()
+      
+      if (fileContent.filter (obj => obj.id === id)){
+        
+      }else{
+        console.log ('el id no existe')
+      }
     }
+
+    async deleteAll () { //borrar todo
+      const fileContent = await this.#readArchive()
+      await fs.promises.writeFile (this.fileRoute, JSON.stringify ([]), 'utf-8')
+
+  }
+
 
 }
 
-//prueba usuario
-const user1= new user ( 
-    "William",
-    "Turner",
-    [
-    {title:"Fahrenheit 451", author:"Ray Bradbury"},
-    {title:"Brave New World", author:"Aldous Huxley"}
-    ],
-    ["Nina", "Zac", "Flash"]
-)
+const container = new Container ('./items.txt')
 
-//mostrar
-console.log (user1.GetFullName ())
-console.log(user1.CountPets ())
-console.log(user1.GetBooksNames ())
-
+//container.save ({name:'producto', price:100})
+//container.getAll ()
+container.getById(3)
+//container.deleteById (2)
+//container.deleteAll()
