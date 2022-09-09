@@ -49,7 +49,9 @@ class Container {
       const fileContent = await this.#readArchive()
       
       if (fileContent.filter (obj => obj.id === id)){
-        
+        const deleteId = fileContent.filter (obj => obj.id !== id)
+        await fs.promises.writeFile (this.fileRoute, JSON.stringify (deleteId), 'utf-8')
+      
       }else{
         console.log ('el id no existe')
       }
@@ -68,6 +70,6 @@ const container = new Container ('./items.txt')
 
 //container.save ({name:'producto', price:100})
 //container.getAll ()
-container.getById(3)
+//container.getById(3)
 //container.deleteById (2)
-//container.deleteAll()
+container.deleteAll()
