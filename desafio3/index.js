@@ -1,7 +1,8 @@
 
 const fs = require('fs')
 
-class Container {
+
+module.exports = class Container {
 
   constructor (fileRoute) {
     this.fileRoute = fileRoute
@@ -33,7 +34,7 @@ class Container {
       let item = fileContent.filter (obj => obj.id === id)
 
       if (fileContent.filter (obj => obj.id === id)) {
-        console.log (item)
+        return item
       }else{
         console.log ('el id no existe')
       }
@@ -42,7 +43,12 @@ class Container {
 
     async getAll(){ // devuelve un array con los objetos presentes en el archivo
         const fileContent =  await this.#readArchive()
-        console.log(fileContent)
+        return fileContent
+    }
+
+    async getRandom () {
+      const fileContent = await this.#readArchive()
+      return this.getById (Math.floor (Math.random () * [fileContent.length]))
     }
 
     async deleteById (id) { //borrar por id
@@ -66,10 +72,10 @@ class Container {
 
 }
 
-const container = new Container ('./items.txt')
+//const container = new Container ('./items.txt')
 
 //container.save ({name:'producto', price:100})
 //container.getAll ()
 //container.getById(3)
 //container.deleteById (2)
-container.deleteAll()
+//container.deleteAll()
