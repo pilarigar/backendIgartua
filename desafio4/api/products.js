@@ -1,6 +1,4 @@
-const fs = require('fs')
-
-module.exports = class productsApi {
+module.exports= class productsApi {
 
     constructor () {
         this.products = []
@@ -27,14 +25,14 @@ module.exports = class productsApi {
         const index = this.products.findIndex ((p) => p.id == id );
         if (index !== -1) {
             this.products [index] = newProd;
-            return newProd
+            return newProd;
         }
     }
 
     delete (id) {
         if (this.products.find ((prod) => prod.id == id)){
             const deleteId = this.products.find ((prod) => prod.id !== id);
-            return deleteId
+            return deleteId;
         }else{
             console.log ('el id no existe')
         }
