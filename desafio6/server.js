@@ -11,9 +11,6 @@ const io = new IOServer(httpServer)
 
 app.use(express.static('public'))
 
-// app.get('/', (req, res)=>{
-//     res.send("Hola")
-// })
 
 httpServer.listen(8080, ()=>{
     console.log("Listening on port 8080")
@@ -24,7 +21,8 @@ httpServer.listen(8080, ()=>{
 
 io.on('connection', (clients)=>{
     console.log('un cliente se conecto')
-//CHAT
+
+//chat
     clients.emit('message', messages)
 
     clients.on('new-message', (data)=>{
@@ -32,7 +30,7 @@ io.on('connection', (clients)=>{
         io.sockets.emit('message', messages)
     })
 
-//PRODUCTS
+//productos
     clients.emit('products', products)
 
     clients.on('new-product', (data)=>{

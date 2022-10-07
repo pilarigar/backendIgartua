@@ -1,28 +1,25 @@
-<h1>Save Product</h1>
+<h1>Agregar Producto</h1>
 <br>
 <form action='/' method='post'>
     <div class='form-group'>
-        <label for='title'>Title</label>
+        <label for='title'>Item</label>
         <input type='text' name='title' id='title' class='form-control' />
     </div>
     <div class='form-group'>
-        <label for='price'>Price</label>
+        <label for='price'>Nombre</label>
         <input type='number' name='price' id='price' class='form-control' />
     </div>
     <div class='form-group'>
-        <label for='thumbnail'>Thumbnail</label>
+        <label for='thumbnail'>Imagen</label>
         <input type='text' name='thumbnail' id='thumbnail' class='form-control' />
     </div>
     <br />
-    <button type='submit' class='btn btn-success'>Save</button>
+    <button type='submit' class='btn btn-success'>Guardar</button>
 </form>
 <br>
 
 <% if (newProductSaved) { %>
-    <p> New product saved! <%- title %> with the id of <%- id %>
+    <p> Se guardó el producto <%- title %> con el id: <%- id %>
     </p>
     <% } %>
-        <br>
-        <!-- <form action='/' method='get'>
-            <button type='submit' class='btn btn-info'>See Products</button>
-        </form> -->
+        

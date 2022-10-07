@@ -1,6 +1,6 @@
 const socket = io.connect()
 
-// CHAT 
+// chat
 const addMessage = ( ) =>{
     const mensaje = {
      text : document.getElementById('text').value,
@@ -34,7 +34,7 @@ socket.on('message', (data)=>{
     renderMessages(data)
 })
 
-// PRODUCTS 
+// productos 
 const addProduct = ( ) =>{
     const product = {
      title : document.getElementById('title').value,
